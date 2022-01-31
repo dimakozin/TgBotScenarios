@@ -4,7 +4,7 @@ Telegram bot scenarios application. Use YAML for scenarios
 ## How to use
 
 * ### Get your personal bot token
-Just use [BotFather](t.me/BotFather) to create your Telegram bot
+Just use [BotFather](https://t.me/BotFather) to create your Telegram bot
 
 * ### Paste token to settings.json
 ```json
