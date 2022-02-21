@@ -16,9 +16,10 @@ states:
                 - "Он почти ничего не умеет.... ну, как почти"
                 - "Список команд можно посмотреть в клавиатуре"
                 reply_markup:
-                    keyboard:
-                    - row:
-                        - text: "/start"
+                    ReplyKeyboardMarkup:
+                        keyboard:
+                        - row:
+                            text: "/start"
                 drop_state: True
 
             default:
@@ -27,6 +28,20 @@ states:
                 - 'Список доступных команд можно получить по команде /help'
                 drop_state: True
     
+            /test:
+                text:
+                - "Снизу должна быть клавиатура"
+                reply_markup:
+                    InlineKeyboardMarkup:
+                        inline_keyboard:
+                            - button:
+                                text: "Текст с URL"
+                                url: "https://t.me/dimakozin_bot"
+                            - button:
+                                text: "Текст с callback-data"
+                                callback_data: "Some text"
+
+
     testState:
         endpoints:
             default:
