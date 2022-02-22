@@ -66,23 +66,28 @@ let getOptions = (branch) => {
 
             if(!!branch.reply_markup.InlineKeyboardMarkup)
             {
-                const keyboard = branch.reply_markup.InlineKeyboardMarkup.inline_keyboard
+                const rows = branch.reply_markup.InlineKeyboardMarkup.inline_keyboard
                 options.reply_markup = {}
                 options.reply_markup.inline_keyboard = []
-                keyboard.forEach( InlineKeyboardButton => {
-                    const button = InlineKeyboardButton.button
-                    const buttonObject = {
-                        text: button.text
-                    }
+                rows.forEach( row => {
+                    const buttons = row.row
+                    let btnArray = []
+                    buttons.forEach( button => {
+                        const btn = button.button
+                        const btnObject = {
+                            text: btn.text
+                        }
 
-                    if(!!button.url) {
-                        buttonObject.url = button.url
-                    } 
-                    if(!!button.callback_data) {
-                        buttonObject.callback_data = button.callback_data
-                    }
+                        if(!!btn.url) {
+                            btnObject.url = btn.url
+                        } 
+                        if(!!btn.callback_data) {
+                            btnObject.callback_data = btn.callback_data
+                        }
 
-                    options.reply_markup.inline_keyboard.push([ buttonObject ])
+                        btnArray.push(btnObject)
+                    })
+                    options.reply_markup.inline_keyboard.push(btnArray)
                 })
             }
 

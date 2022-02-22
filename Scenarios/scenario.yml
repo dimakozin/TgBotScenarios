@@ -34,12 +34,17 @@ states:
                 reply_markup:
                     InlineKeyboardMarkup:
                         inline_keyboard:
-                            - button:
-                                text: "Текст с URL"
-                                url: "https://t.me/dimakozin_bot"
-                            - button:
-                                text: "Текст с callback-data"
-                                callback_data: "Some text"
+                            - row:
+                                - button:
+                                    text: "Текст с URL в первой строке"
+                                    url: "https://t.me/dimakozin_bot"
+                            - row:
+                                - button:
+                                    text: "Текст с URL во второй строке"
+                                    url: "https://t.me/dimakozin_bot"
+                                - button:
+                                    text: "Текст с callback-data во второй строке"
+                                    callback_data: "Some text"
 
 
     testState:
