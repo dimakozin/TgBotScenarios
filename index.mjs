@@ -47,19 +47,50 @@ let getOptions = (branch) => {
     if(!!branch.reply_markup){
         if(!!branch.reply_markup)
         {
-            options.reply_markup = {}
-            options.reply_markup.one_time_keyboard = true
-            options.reply_markup.resize_keyboard = true
-            options.reply_markup.keyboard = []
-
-            let rows = branch.reply_markup.keyboard
-            rows.forEach(row_object => {
-                let buttons = []
-                row_object.row.forEach(button => {
-                    buttons.push(button.text)
+            if(!!branch.reply_markup.ReplyKeyboardMarkup)
+            {
+                options.reply_markup = {}
+                options.reply_markup.one_time_keyboard = true
+                options.reply_markup.resize_keyboard = true
+                options.reply_markup.keyboard = []
+    
+                let rows = branch.reply_markup.ReplyKeyboardMarkup.keyboard
+                rows.forEach(row_object => {
+                    let buttons = []
+                    row_object.row.forEach(button => {
+                        buttons.push(button.text)
+                    })
+                    options.reply_markup.keyboard.push(buttons)
                 })
-                options.reply_markup.keyboard.push(buttons)
-            })
+            }
+
+            if(!!branch.reply_markup.InlineKeyboardMarkup)
+            {
+                const rows = branch.reply_markup.InlineKeyboardMarkup.inline_keyboard
+                options.reply_markup = {}
+                options.reply_markup.inline_keyboard = []
+                rows.forEach( row => {
+                    const buttons = row.row
+                    let btnArray = []
+                    buttons.forEach( button => {
+                        const btn = button.button
+                        const btnObject = {
+                            text: btn.text
+                        }
+
+                        if(!!btn.url) {
+                            btnObject.url = btn.url
+                        } 
+                        if(!!btn.callback_data) {
+                            btnObject.callback_data = btn.callback_data
+                        }
+
+                        btnArray.push(btnObject)
+                    })
+                    options.reply_markup.inline_keyboard.push(btnArray)
+                })
+            }
+
         }
     }
 
@@ -98,3 +129,7 @@ bot.on('message', (msg) => {
     // send result message
     if(!!response) bot.sendMessage(msg.chat.id, response, options)
 });
+
+bot.on('callback_query', (msg) => {
+    console.log(msg)
+})
